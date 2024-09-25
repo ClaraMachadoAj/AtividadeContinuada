@@ -4,11 +4,11 @@ package br.com.cesarschool.poo.titulos.entidades;
  * E deve ter os seguintes atributos:
  * taxaJuros, do tipo double.
  * 
- * Deve ter um construtor público que inicializa os atributos, 
- * e métodos set/get públicos para os atributos.
+ * Deve ter um construtor pÃºblico que inicializa os atributos, 
+ * e mÃ©todos set/get pÃºblicos para os atributos.
  * 
- * Deve ter um método público double calcularPrecoTransacao(double montante): o preço 
- * da transação é montante vezes (1 - taxaJuros/100.0).
+ * Deve ter um mÃ©todo pÃºblico double calcularPrecoTransacao(double montante): o preÃ§o 
+ * da transaÃ§Ã£o Ã© montante vezes (1 - taxaJuros/100.0).
  */
 public class TituloDivida {
 

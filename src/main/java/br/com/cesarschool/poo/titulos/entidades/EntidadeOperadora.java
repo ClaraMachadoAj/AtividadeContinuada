@@ -7,13 +7,13 @@ package br.com.cesarschool.poo.titulos.entidades;
  * saldoAcao, do tipo double
  * saldoTituloDivida, do tipo double
  * 
- * Deve ter um construtor público que inicializa os atributos identificador, nome
- * e autorizadoAcao. Deve ter métodos set/get públicos para os atributos identificador, nome
- * e autorizadoAcao. O atributo identificador é read-only fora da classe.
+ * Deve ter um construtor pÃºblico que inicializa os atributos identificador, nome
+ * e autorizadoAcao. Deve ter mÃ©todos set/get pÃºblicos para os atributos identificador, nome
+ * e autorizadoAcao. O atributo identificador Ã© read-only fora da classe.
  * 
- * Os atributos saldoAcao e saldoTituloDivida devem ter apenas métodos get públicos.
+ * Os atributos saldoAcao e saldoTituloDivida devem ter apenas mÃ©todos get pÃºblicos.
  * 
- * Outros métodos públicos:
+ * Outros mÃ©todos pÃºblicos:
  * 
  *  void creditarSaldoAcao(double valor): deve adicionar valor ao saldoAcao
  *  void debitarSaldoAcao(double valor): deve diminuir valor de saldoAcao

@@ -8,9 +8,9 @@ import java.time.LocalDate;
  * nome, do tipo String
  * data de validade, do tipo LocalDate
  * 
- * Deve ter um construtor público que inicializa os atributos, 
- * e métodos set/get públicos para os atributos. O atributo identificador
- * é read-only fora da classe.
+ * Deve ter um construtor pÃºblico que inicializa os atributos, 
+ * e mÃ©todos set/get pÃºblicos para os atributos. O atributo identificador
+ * Ã© read-only fora da classe.
  */
 public class Ativo {
     int identificador;
