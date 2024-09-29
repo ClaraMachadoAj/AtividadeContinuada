@@ -1,6 +1,4 @@
-package br.com.cesarschool.poo.titulos.repositorios;
 
-import br.com.cesarschool.poo.titulos.entidades.Transacao;
 /*
  * Deve gravar em e ler de um arquivo texto chamado Transacao.txt os dados dos objetos do tipo
  * Transacao. Seguem abaixo exemplos de linhas 
@@ -18,6 +16,11 @@ import br.com.cesarschool.poo.titulos.entidades.Transacao;
  * A busca deve retornar um array de transações cuja entidadeCredito tenha identificador igual ao
  * recebido como parâmetro.  
  */
+
+package br.com.cesarschool.poo.titulos.repositorios;
+
+import br.com.cesarschool.poo.titulos.entidades.Transacao;
+
 public class RepositorioTransacao {
 	public void incluir(Transacao transacao) {
 		

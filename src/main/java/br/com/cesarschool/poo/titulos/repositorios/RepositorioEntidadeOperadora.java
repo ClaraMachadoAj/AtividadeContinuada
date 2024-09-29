@@ -1,4 +1,4 @@
-package br.com.cesarschool.poo.titulos.repositorios;
+
 /*
  * Deve gravar em e ler de um arquivo texto chamado Acao.txt os dados dos objetos do tipo
  * Acao. Seguem abaixo exemplos de linhas.
@@ -22,6 +22,9 @@ package br.com.cesarschool.poo.titulos.repositorios;
  * A busca deve localizar uma linha por identificador, materializar e retornar um 
  * objeto. Caso o identificador não seja encontrado no arquivo, retornar null.   
  */
+
+package br.com.cesarschool.poo.titulos.repositorios;
+
 public class RepositorioEntidadeOperadora {
 
 }

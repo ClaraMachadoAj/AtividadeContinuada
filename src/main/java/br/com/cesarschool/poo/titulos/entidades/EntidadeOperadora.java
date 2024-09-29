@@ -22,7 +22,7 @@
 
 package br.com.cesarschool.poo.titulos.entidades;
 
-public class EntidadeOperadora { // tá dando duplicado provavelmente por causa da subclasse q ele criou
+public class EntidadeOperadora {
 
     // ATRIBUTOS
 
@@ -95,5 +95,3 @@ public class EntidadeOperadora { // tá dando duplicado provavelmente por causa 
         }
     }
 }
-
-
