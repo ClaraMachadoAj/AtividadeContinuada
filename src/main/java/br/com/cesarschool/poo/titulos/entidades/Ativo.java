@@ -48,5 +48,3 @@ public class Ativo {
         this.dataDeValidade = dataDeValidade;
     }
 }
-
-// Isso é um teste - by Lari

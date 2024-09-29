@@ -39,59 +39,61 @@ public class EntidadeOperadora { // tá dando duplicado provavelmente por causa 
         this.saldoAcao = 0.0;
         this.saldoTituloDivida = 0.0;
     }
-}
 
-// MÉTODOS
+    // MÉTODOS
 
-public String getNome() {
-    return nome;
-}
+    public String getNome() {
+        return nome;
+    }
 
-public void setNome(String nome) {
-    this.nome = nome;
-}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-public double getAutorizadoAcao() {
-    return autorizadoAcao;
-}
+    public double getAutorizadoAcao() {
+        return autorizadoAcao;
+    }
 
-public void setAutorizadoAcao(double autorizadoAcao) {
-    this.autorizadoAcao = autorizadoAcao;
-}
+    public void setAutorizadoAcao(double autorizadoAcao) {
+        this.autorizadoAcao = autorizadoAcao;
+    }
 
-// O atributo identificador é read-only fora da classe
-public long getIdentificador() {
-    return identificador;
-}
+    // O atributo identificador é read-only fora da classe
+    public long getIdentificador() {
+        return identificador;
+    }
 
-// Os atributos saldoAcao e saldoTituloDivida tem apenas métodos get
-public double getSaldoAcao() {
-    return saldoAcao;
-}
+    // Os atributos saldoAcao e saldoTituloDivida tem apenas métodos get
+    public double getSaldoAcao() {
+        return saldoAcao;
+    }
 
-public double getSaldoTituloDivida() {
-    return saldoTituloDivida;
-}
+    public double getSaldoTituloDivida() {
+        return saldoTituloDivida;
+    }
 
 // MÉTODOS PÚBLICOS
 
 
-public void creditarSaldoAcao(double valor) {
-    saldoAcao += valor;
-}
+    public void creditarSaldoAcao(double valor) {
+        saldoAcao += valor;
+    }
 
-public void debitarSaldoAcao(double valor) {
-    if (valor <= saldoAcao) {
-        saldoAcao -= valor;
+    public void debitarSaldoAcao(double valor) {
+        if (valor <= saldoAcao) {
+            saldoAcao -= valor;
+        }
+    }
+
+    public void creditarSaldoTituloDivida(double valor) {
+        saldoTituloDivida += valor;
+    }
+
+    public void debitarSaldoTituloDivida(double valor) {
+        if (valor <= saldoTituloDivida) {
+            saldoTituloDivida -= valor;
+        }
     }
 }
 
-public void creditarSaldoTituloDivida(double valor) {
-    saldoTituloDivida += valor;
-}
 
-public void debitarSaldoTituloDivida(double valor) {
-    if (valor <= saldoTituloDivida) {
-        saldoTituloDivida -= valor;
-    }
-}
