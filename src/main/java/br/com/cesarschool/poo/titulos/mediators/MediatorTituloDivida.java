@@ -14,7 +14,7 @@ package br.com.cesarschool.poo.titulos.mediators;
  * nome: deve ser preenchido, diferente de branco e de null (2). deve ter entre 10 e 100 caracteres (3).
  * data de validade: deve ser maior do que a data atual mais 180 dias (4).
  * valorUnitario: deve ser maior que zero (5).
- * O método validar deve retornar null se o objeto estiver válido, e uma mensagem pertinente (ver abaixo)
+ * O metodo validar deve retornar null se o objeto estiver válido, e uma mensagem pertinente (ver abaixo)
  * se algum valor de atributo estiver inválido.
  *
  * (1) - Identificador deve estar entre 1 e 99999.

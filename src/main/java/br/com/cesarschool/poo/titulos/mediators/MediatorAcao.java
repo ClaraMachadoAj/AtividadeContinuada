@@ -13,7 +13,7 @@ package br.com.cesarschool.poo.titulos.mediators;
  * nome: deve ser preenchido, diferente de branco e de null (2). deve ter entre 10 e 100 caracteres (3).
  * data de validade: deve ser maior do que a data atual mais 30 dias (4).
  * valorUnitario: deve ser maior que zero (5).
- * O método validar deve retornar null se o objeto estiver válido, e uma mensagem pertinente (ver abaixo)
+ * O metodo validar deve retornar null se o objeto estiver válido, e uma mensagem pertinente (ver abaixo)
  * se algum valor de atributo estiver inválido.
  *
  * (1) - Identificador deve estar entre 1 e 99999.
@@ -22,7 +22,7 @@ package br.com.cesarschool.poo.titulos.mediators;
  * (4) - Data de validade deve ter pelo menos 30 dias na frente da data atual.
  * (5) - Valor unitário deve ser maior que zero.
  *
- * public String incluir(Acao acao): deve chamar o método validar. Se ele
+ * public String incluir(Acao acao): deve chamar o metodo validar. Se ele
  * retornar null, deve incluir acao no repositório. Retornos possíveis:
  * (1) null, se o retorno do validar for null e o retorno do incluir do
  * repositório for true.
@@ -31,7 +31,7 @@ package br.com.cesarschool.poo.titulos.mediators;
  * (3) A mensagem "Ação já existente", se o retorno do validar for null
  * e o retorno do repositório for false.
  *
- * public String alterar(Acao acao): deve chamar o método validar. Se ele
+ * public String alterar(Acao acao): deve chamar o metodo validar. Se ele
  * retornar null, deve alterar acao no repositório. Retornos possíveis:
  * (1) null, se o retorno do validar for null e o retorno do alterar do
  * repositório for true.
