@@ -28,6 +28,7 @@ package br.com.cesarschool.poo.titulos.repositorios;
 
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,15 +110,20 @@ public class RepositorioTituloDivida {
 
 	// Metodo auxiliar para formatar um objeto TituloDivida para uma linha de texto
 	private String formatarLinha(TituloDivida tituloDivida) {
-		return STR."\{tituloDivida.getIdentificador()};\{tituloDivida.getNome()};\{tituloDivida.getDataValidade()};\{tituloDivida.getTaxaJuros()}";
+		return String.format("%d;%s;%s;%.2f",
+				tituloDivida.getIdentificador(),
+				tituloDivida.getNome(),
+				tituloDivida.getDataDeValidade(),
+				tituloDivida.getTaxaJuros());
 	}
+
 
 	// Metodo auxiliar para converter uma linha de texto em um objeto TituloDivida
 	private TituloDivida parseLinhaParaTitulo(String linha) {
 		String[] campos = linha.split(";");
 		int identificador = Integer.parseInt(campos[0]);
 		String nome = campos[1];
-		String dataValidade = campos[2];
+		LocalDate dataValidade = LocalDate.parse(campos[2]);
 		double taxaJuros = Double.parseDouble(campos[3]);
 		return new TituloDivida(identificador, nome, dataValidade, taxaJuros);
 	}

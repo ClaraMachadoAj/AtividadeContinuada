@@ -72,8 +72,7 @@ public class EntidadeOperadora {
         return saldoTituloDivida;
     }
 
-// MÉTODOS PÚBLICOS
-
+    // MÉTODOS PÚBLICOS
 
     public void creditarSaldoAcao(double valor) {
         saldoAcao += valor;
