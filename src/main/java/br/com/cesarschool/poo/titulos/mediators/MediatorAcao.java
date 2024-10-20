@@ -69,32 +69,35 @@ public class MediatorAcao {
     }
 
     private String validar(Acao acao) {
-        if (acao.getIdentificador() <= 0 || acao.getIdentificador() >= 10000) {
-            return "Identificador deve estar entre 1 e 99999";
-        } else {
-            return null;
+        // Validação do identificador
+        if (acao.getIdentificador() <= 0 || acao.getIdentificador() >= 100000) {
+            return "Identificador deve estar entre 1 e 99999.";
         }
 
-        String nome;
-        nome = acao.getNome();
+        // Validação do nome
+        String nome = acao.getNome();
         if (nome == null || nome.trim().isEmpty()) {
-            return "Nome deve ser preenchido";
+            return "Nome deve ser preenchido.";
         }
         if (nome.length() < 10 || nome.length() > 100) {
             return "O nome deve ter entre 10 e 100 caracteres.";
         }
 
+        // Validação da data de validade
         LocalDate dataAtualMais30 = LocalDate.now().plusDays(30);
-        if (acao.getDataValidade().isBefore(dataAtualMais30)) {
-            return "Data de validade deve ter pelo menos 30 dias na frente da data atual";
+        if (acao.getDataDeValidade().isBefore(dataAtualMais30)) {
+            return "Data de validade deve ter pelo menos 30 dias na frente da data atual.";
         }
 
+        // Validação do valor unitário
         if (acao.getValorUnitario() <= 0) {
-            return "Valor unitário deve ser maior que zero";
+            return "Valor unitário deve ser maior que zero.";
         }
 
+        // Se todas as validações forem satisfeitas, retorna null
         return null;
     }
+
 
     public String incluir(Acao acao) {
         String MensagemValidacao = validar(acao);
@@ -129,7 +132,7 @@ public class MediatorAcao {
                 return "O nome deve ter entre 10 e 100 caracteres.";
             }
 
-            if (acao.getDataValidade().isBefore(LocalDate.now().plusDays(30))) {
+            if (acao.getDataDeValidade().isBefore(LocalDate.now().plusDays(30))) {
                 return "A data de validade deve ser superior a 30 dias a partir da data atual.";
             }
 

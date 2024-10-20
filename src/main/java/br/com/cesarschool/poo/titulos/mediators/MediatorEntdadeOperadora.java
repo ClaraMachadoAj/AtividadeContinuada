@@ -81,7 +81,7 @@ public class MediatorEntdadeOperadora {
         }
 
         LocalDate dataAtualMais180 = LocalDate.now().plusDays(180);
-        if (entidade.getDataValidade().isBefore(dataAtualMais180)) {
+        if (entidade.getDataDeValidade().isBefore(dataAtualMais180)) {
             return "Data de validade deve ser superior a 180 dias a partir da data atual.";
         }
 
