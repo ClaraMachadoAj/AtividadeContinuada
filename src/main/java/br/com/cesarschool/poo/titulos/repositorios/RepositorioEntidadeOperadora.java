@@ -8,7 +8,7 @@
     3;CORREIOS;2027-11-11;6.12 
  * 
  * A inclusão deve adicionar uma nova linha ao arquivo. Não é permitido incluir 
- * identificador repetido. Neste caso, o método deve retornar false. Inclusão com 
+ * identificador repetido. Neste caso, o metodo deve retornar false. Inclusão com
  * sucesso, retorno true.
  * 
  * A alteração deve substituir a linha atual por uma nova linha. A linha deve ser 

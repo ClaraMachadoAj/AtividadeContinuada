@@ -109,10 +109,7 @@ public class RepositorioTituloDivida {
 
 	// Metodo auxiliar para formatar um objeto TituloDivida para uma linha de texto
 	private String formatarLinha(TituloDivida tituloDivida) {
-		return tituloDivida.getIdentificador() + ";" +
-				tituloDivida.getNome() + ";" +
-				tituloDivida.getDataValidade() + ";" +
-				tituloDivida.getTaxaJuros();
+		return STR."\{tituloDivida.getIdentificador()};\{tituloDivida.getNome()};\{tituloDivida.getDataValidade()};\{tituloDivida.getTaxaJuros()}";
 	}
 
 	// Metodo auxiliar para converter uma linha de texto em um objeto TituloDivida
