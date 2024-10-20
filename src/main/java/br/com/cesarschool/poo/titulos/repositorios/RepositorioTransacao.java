@@ -137,7 +137,7 @@ public class RepositorioTransacao {
 		return String.format("%d;%s;%s;%.2f",
 				acao.getIdentificador(),
 				acao.getNome(),
-				acao.getDataValidade().format(DATE_FORMATTER),
+				acao.getDataDeValidade().format(DATE_FORMATTER),
 				acao.getValorUnitario());
 	}
 
@@ -146,7 +146,7 @@ public class RepositorioTransacao {
 		return String.format("%d;%s;%s;%.2f",
 				tituloDivida.getIdentificador(),
 				tituloDivida.getNome(),
-				tituloDivida.getDataValidade().format(DATE_FORMATTER),
+				tituloDivida.getDataDeValidade().format(DATE_FORMATTER),
 				tituloDivida.getTaxaJuros());
 	}
 }
