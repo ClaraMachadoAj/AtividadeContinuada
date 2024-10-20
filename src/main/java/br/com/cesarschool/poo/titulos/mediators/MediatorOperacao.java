@@ -97,6 +97,117 @@ import br.com.cesarschool.poo.titulos.entidades.Transacao;
  *
  * 6- Retornar o novo array.
  **/
-public class MediatorOperacao {
 
+import br.com.cesarschool.poo.titulos.entidades.Acao;
+import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
+import br.com.cesarschool.poo.titulos.entidades.Transacao;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioTransacao;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class MediatorOperacao {
+    private static MediatorOperacao instancia;
+
+    private final MediatorAcao mediatorAcao = MediatorAcao.getInstancia();
+    private final MediatorTituloDivida mediatorTituloDivida = MediatorTituloDivida.getInstancia();
+    private final MediatorEntdadeOperadora mediatorEntidadeOperadora = MediatorEntdadeOperadora.getInstancia();
+    private final RepositorioTransacao repositorioTransacao = new RepositorioTransacao();
+
+    private MediatorOperacao() { }
+
+    public static synchronized MediatorOperacao getInstancia() {
+        if (instancia == null) {
+            instancia = new MediatorOperacao();
+        }
+        return instancia;
+    }
+
+    public String realizarOperacao(boolean ehAcao, int entidadeCredito, int idEntidadeDebito, int idAcaoOuTitulo, double valor) {
+        if (valor <= 0) {
+            return "Valor inválido";
+        }
+
+        EntidadeOperadora entidadeCredora = mediatorEntidadeOperadora.buscar(entidadeCredito);
+        if (entidadeCredora == null) {
+            return "Entidade crédito inexistente";
+        }
+
+        EntidadeOperadora entidadeDevedora = mediatorEntidadeOperadora.buscar(idEntidadeDebito);
+        if (entidadeDevedora == null) {
+            return "Entidade débito inexistente";
+        }
+
+        if (ehAcao) {
+            if (!entidadeCredora.isAutorizadaAcao()) {
+                return "Entidade de crédito não autorizada para ação";
+            }
+            if (!entidadeDevedora.isAutorizadaAcao()) {
+                return "Entidade de débito não autorizada para ação";
+            }
+        }
+
+        Object item = ehAcao ? mediatorAcao.buscar(idAcaoOuTitulo) : mediatorTituloDivida.buscar(idAcaoOuTitulo);
+        if (item == null) {
+            return ehAcao ? "Ação inexistente" : "Título inexistente";
+        }
+
+        double saldoDisponivel = ehAcao ? entidadeDevedora.getSaldoAcao() : entidadeDevedora.getSaldoTituloDivida();
+        if (saldoDisponivel < valor) {
+            return "Saldo da entidade débito insuficiente";
+        }
+
+        if (ehAcao) {
+            Acao acao = (Acao) item;
+            if (acao.getValorUnitario() > valor) {
+                return "Valor da operação é menor do que o valor unitário da ação";
+            }
+        }
+
+        double valorOperacao = ehAcao ? valor : ((TituloDivida) item).calcularPrecoTransacao(valor);
+        if (ehAcao) {
+            entidadeCredora.creditarSaldoAcao(valorOperacao);
+            entidadeDevedora.debitarSaldoAcao(valorOperacao);
+        } else {
+            entidadeCredora.creditarSaldoTituloDivida(valorOperacao);
+            entidadeDevedora.debitarSaldoTituloDivida(valorOperacao);
+        }
+
+        String resultadoCredora = mediatorEntidadeOperadora.alterar(entidadeCredora);
+        if (resultadoCredora != null) {
+            return resultadoCredora;
+        }
+
+        String resultadoDevedora = mediatorEntidadeOperadora.alterar(entidadeDevedora);
+        if (resultadoDevedora != null) {
+            return resultadoDevedora;
+        }
+
+        Transacao transacao = new Transacao(
+                entidadeCredora,
+                entidadeDevedora,
+                ehAcao ? (Acao) item : null,
+                ehAcao ? null : (TituloDivida) item,
+                valorOperacao,
+                LocalDateTime.now()
+        );
+
+        repositorioTransacao.incluir(transacao);
+        return null;
+    }
+
+    public Transacao[] gerarExtrato(int entidade) {
+        Transacao[] transacoesCredoras = repositorioTransacao.buscarPorEntidadeCredora(entidade);
+        Transacao[] transacoesDevedoras = repositorioTransacao.buscarPorEntidadeDevedora(entidade);
+
+        List<Transacao> todasTransacoes = new ArrayList<>();
+        todasTransacoes.addAll(Arrays.asList(transacoesCredoras));
+        todasTransacoes.addAll(Arrays.asList(transacoesDevedoras));
+
+        todasTransacoes.sort((t1, t2) -> t2.getDataHoraOperacao().compareTo(t1.getDataHoraOperacao()));
+
+        return todasTransacoes.toArray(new Transacao[0]);
+    }
 }
