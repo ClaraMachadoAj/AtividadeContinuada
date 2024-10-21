@@ -80,14 +80,14 @@ public class MediatorEntdadeOperadora {
             return "Nome deve ter entre 10 e 100 caracteres.";
         }
 
-        LocalDate dataAtualMais180 = LocalDate.now().plusDays(180);
-        if (entidade.getDataValidade().isBefore(dataAtualMais180)) {
+        /*LocalDate dataAtualMais180 = LocalDate.now().plusDays(180);
+        if (entidade.getDataDeValidade().isBefore(dataAtualMais180)) {
             return "Data de validade deve ser superior a 180 dias a partir da data atual.";
         }
 
         if (entidade.getValorUnitario() <= 0) {
             return "Valor unitário deve ser maior que zero.";
-        }
+        }*/
 
         return null;
     }
@@ -124,25 +124,27 @@ public class MediatorEntdadeOperadora {
         }
     }
 
+    // Metodo para excluir uma EntidadeOperadora por identificador
     public String excluir(int identificador) {
         if (!validarIdentificador(identificador)) {
-            return "Entidade inexistente"; // (2)
+            return "Entidade inexistente.";
         }
 
         boolean excluida = repositorioEntidadeOperadora.excluir(identificador);
-
-        if (excluida) {
-            return null; // (1)
-        } else {
-            return "Entidade inexistente"; // (2)
-        }
+        return excluida ? null : "Entidade inexistente.";
     }
 
+    // Metodo para buscar uma EntidadeOperadora por identificador
     public EntidadeOperadora buscar(int identificador) {
         if (!validarIdentificador(identificador)) {
             return null;
         }
         return repositorioEntidadeOperadora.buscar(identificador);
+    }
+
+    // Metodo para validar o identificador
+    private boolean validarIdentificador(long identificador) {
+        return identificador >= 100 && identificador <= 1000000;
     }
 
 }

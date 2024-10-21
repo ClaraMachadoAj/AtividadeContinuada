@@ -1,5 +1,3 @@
-package br.com.cesarschool.poo.titulos.mediators;
-
 /*
  * Deve ser um singleton.
  *
@@ -52,6 +50,7 @@ package br.com.cesarschool.poo.titulos.mediators;
  * que ele retornar. Se o identificador for inválido, retornar null.
  */
 
+package br.com.cesarschool.poo.titulos.mediators;
 
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioTituloDivida;
@@ -59,53 +58,47 @@ import java.time.LocalDate;
 
 public class MediatorTituloDivida {
 
-    // Construtor privado para impedir criação de instâncias fora da classe
+    // Instância única de RepositorioTituloDivida inicializada diretamente
+    private final RepositorioTituloDivida repositorioTituloDivida = new RepositorioTituloDivida();
+
+    // Construtor privado para impedir a criação de instâncias fora da classe (Singleton)
     private MediatorTituloDivida() {}
 
-    // Classe interna estática que armazena a instância única (Lazy Holder Singleton)
+    // Classe interna estática para garantir o Lazy Holder Singleton
     private static class SingletonHolder {
-        // Instância única de MediatorTituloDivida
         private static final MediatorTituloDivida instance = new MediatorTituloDivida();
     }
 
-    // Metodo que retorna a instância única de MediatorTituloDivida
+    // Metodo para obter a instância única (Singleton)
     public static MediatorTituloDivida getInstance() {
         return SingletonHolder.instance;
     }
 
-    private final RepositorioTituloDivida repositorioTituloDivida = getInstance().repositorioTituloDivida;
-
-    // Metodo privado para validar o TituloDivida
-    private String validar(TituloDivida titulo){
-        //(1)
+    // Metodo privado para validar um TituloDivida
+    private String validar(TituloDivida titulo) {
         if (titulo.getIdentificador() <= 0 || titulo.getIdentificador() >= 100000) {
             return "Identificador deve estar entre 1 e 99999.";
         }
-        //(2)
         if (titulo.getNome() == null || titulo.getNome().isBlank()) {
             return "Nome deve ser preenchido.";
         }
-        //(3)
         if (titulo.getNome().length() < 10 || titulo.getNome().length() > 100) {
             return "Nome deve ter entre 10 e 100 caracteres.";
         }
-        //(4)
         if (titulo.getDataDeValidade().isBefore(LocalDate.now().plusDays(180))) {
             return "Data de validade deve ter pelo menos 180 dias na frente da data atual.";
         }
-        //(5)
         if (titulo.getTaxaJuros() < 0) {
             return "Taxa de juros deve ser maior ou igual a zero.";
         }
-
         return null; // Objeto válido
     }
 
     // Metodo para incluir um TituloDivida
-    public String incluir(TituloDivida titulo){
-        String validacao = validar(titulo);
-        if (validacao != null){
-            return validacao;
+    public String incluir(TituloDivida titulo) {
+        String mensagemValidacao = validar(titulo);
+        if (mensagemValidacao != null) {
+            return mensagemValidacao; // Retorna a mensagem de erro, se houver
         }
 
         boolean sucesso = repositorioTituloDivida.incluir(titulo);
@@ -114,19 +107,21 @@ public class MediatorTituloDivida {
 
     // Metodo para alterar um TituloDivida
     public String alterar(TituloDivida titulo) {
-        String validacao = validar(titulo);
-        if (validacao != null) {
-            return validacao;
+        String mensagemValidacao = validar(titulo);
+        if (mensagemValidacao != null) {
+            return mensagemValidacao; // Retorna a mensagem de erro, se houver
         }
+
         boolean sucesso = repositorioTituloDivida.alterar(titulo);
         return sucesso ? null : "Título inexistente!";
     }
 
-    // metodo para excluir um TituloDivida pelo identificador
+    // Metodo para excluir um TituloDivida pelo identificador
     public String excluir(int identificador) {
         if (identificador <= 0 || identificador >= 100000) {
             return "Identificador deve estar entre 1 e 99999.";
         }
+
         boolean sucesso = repositorioTituloDivida.excluir(identificador);
         return sucesso ? null : "Título inexistente!";
     }
@@ -138,6 +133,4 @@ public class MediatorTituloDivida {
         }
         return repositorioTituloDivida.buscar(identificador);
     }
-
-
 }
