@@ -51,15 +51,30 @@ public class RepositorioTransacao {
 
 	// Metodo para buscar transações pelo identificador da entidade credora
 	public Transacao[] buscarPorEntidadeCredora(long identificadorEntidadeCredito) {
+		return buscarTransacoes(identificadorEntidadeCredito, true);
+	}
+
+	// Metodo para buscar transações pelo identificador da entidade devedora
+	public Transacao[] buscarPorEntidadeDebito(long identificadorEntidadeDebito) {
+		return buscarTransacoes(identificadorEntidadeDebito, false);
+	}
+
+	// Metodo auxiliar para buscar transações de acordo com o tipo de entidade
+	private Transacao[] buscarTransacoes(long identificador, boolean isCredito) {
 		List<Transacao> transacoes = new ArrayList<>();
 
 		try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
 			String linha;
 			while ((linha = reader.readLine()) != null) {
 				Transacao transacao = parseLinhaParaTransacao(linha);
-				if (transacao != null &&
-						transacao.getEntidadeCredito().getIdentificador() == identificadorEntidadeCredito) {
-					transacoes.add(transacao);
+				if (transacao != null) {
+					long id = isCredito
+							? transacao.getEntidadeCredito().getIdentificador()
+							: transacao.getEntidadeDebito().getIdentificador();
+
+					if (id == identificador) {
+						transacoes.add(transacao);
+					}
 				}
 			}
 		} catch (IOException e) {
