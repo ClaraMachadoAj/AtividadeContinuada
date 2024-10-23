@@ -55,7 +55,7 @@ public class RepositorioTransacao {
 	}
 
 	// Metodo para buscar transações pelo identificador da entidade devedora
-	public Transacao[] buscarPorEntidadeDebito(long identificadorEntidadeDebito) {
+	public Transacao[] buscarPorEntidadeDevedora(long identificadorEntidadeDebito) {
 		return buscarTransacoes(identificadorEntidadeDebito, false);
 	}
 

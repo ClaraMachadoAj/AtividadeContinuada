@@ -1,7 +1,3 @@
-package br.com.cesarschool.poo.titulos.mediators;
-
-import br.com.cesarschool.poo.titulos.entidades.Transacao;
-
 /*
  * Deve ser um singleton.
  *
@@ -97,11 +93,12 @@ import br.com.cesarschool.poo.titulos.entidades.Transacao;
  *
  * 6- Retornar o novo array.
  **/
+package br.com.cesarschool.poo.titulos.mediators;
 
+import br.com.cesarschool.poo.titulos.entidades.Transacao;
 import br.com.cesarschool.poo.titulos.entidades.Acao;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
-import br.com.cesarschool.poo.titulos.entidades.Transacao;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioTransacao;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -112,7 +109,7 @@ public class MediatorOperacao {
     private static MediatorOperacao instancia;
 
     private final MediatorAcao mediatorAcao = MediatorAcao.getInstancia();
-    private final MediatorTituloDivida mediatorTituloDivida = MediatorTituloDivida.getInstancia();
+    private final MediatorTituloDivida mediatorTituloDivida = MediatorTituloDivida.getInstance();
     private final MediatorEntdadeOperadora mediatorEntidadeOperadora = MediatorEntdadeOperadora.getInstancia();
     private final RepositorioTransacao repositorioTransacao = new RepositorioTransacao();
 
@@ -141,13 +138,14 @@ public class MediatorOperacao {
         }
 
         if (ehAcao) {
-            if (!entidadeCredora.isAutorizadaAcao()) {
+            if (entidadeCredora.getAutorizadoAcao() <= 0) {
                 return "Entidade de crédito não autorizada para ação";
             }
-            if (!entidadeDevedora.isAutorizadaAcao()) {
+            if (entidadeDevedora.getAutorizadoAcao() <= 0) {
                 return "Entidade de débito não autorizada para ação";
             }
         }
+
 
         Object item = ehAcao ? mediatorAcao.buscar(idAcaoOuTitulo) : mediatorTituloDivida.buscar(idAcaoOuTitulo);
         if (item == null) {
