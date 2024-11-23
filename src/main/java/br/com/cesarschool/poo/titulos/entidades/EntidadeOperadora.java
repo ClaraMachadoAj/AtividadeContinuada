@@ -22,9 +22,10 @@
 
 package br.com.cesarschool.poo.titulos.entidades;
 
-public class EntidadeOperadora {
+import br.gov.cesarschool.poo.daogenerico.Entidade;
 
-    // ATRIBUTOS
+public class EntidadeOperadora extends Entidade {
+    private static final long serialVersionUID = 1L;
 
     private final long identificador;
     private String nome;
@@ -32,7 +33,7 @@ public class EntidadeOperadora {
     private double saldoAcao;
     private double saldoTituloDivida;
 
-    public EntidadeOperadora(long identificador, String nome, double autorizadoAcao) { // construtor publico p iniciar
+    public EntidadeOperadora(long identificador, String nome, double autorizadoAcao) {
         this.identificador = identificador;
         this.nome = nome;
         this.autorizadoAcao = autorizadoAcao;
@@ -40,7 +41,15 @@ public class EntidadeOperadora {
         this.saldoTituloDivida = 0.0;
     }
 
-    // MÉTODOS
+    @Override
+    public String getIdUnico() {
+        return String.valueOf(identificador);
+    }
+
+    // Métodos get/set e outros
+    public long getIdentificador() {
+        return identificador;
+    }
 
     public String getNome() {
         return nome;
@@ -58,21 +67,9 @@ public class EntidadeOperadora {
         this.autorizadoAcao = autorizadoAcao;
     }
 
-    // O atributo identificador é read-only fora da classe
-    public long getIdentificador() {
-        return identificador;
-    }
-
-    // Os atributos saldoAcao e saldoTituloDivida tem apenas métodos get
     public double getSaldoAcao() {
         return saldoAcao;
     }
-
-    public double getSaldoTituloDivida() {
-        return saldoTituloDivida;
-    }
-
-    // MÉTODOS PÚBLICOS
 
     public void creditarSaldoAcao(double valor) {
         saldoAcao += valor;
@@ -82,6 +79,10 @@ public class EntidadeOperadora {
         if (valor <= saldoAcao) {
             saldoAcao -= valor;
         }
+    }
+
+    public double getSaldoTituloDivida() {
+        return saldoTituloDivida;
     }
 
     public void creditarSaldoTituloDivida(double valor) {

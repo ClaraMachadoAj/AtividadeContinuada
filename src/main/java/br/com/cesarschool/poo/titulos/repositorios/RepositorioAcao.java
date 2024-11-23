@@ -108,9 +108,7 @@ public class RepositorioAcao {
 	private boolean salvarAcoesNoArquivo(List<Acao> acoes) {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
 			for (Acao acao : acoes) {
-				String linha = acao.getIdentificador() + ";" + acao.getNome() + ";" +
-						acao.getDataDeValidade().format(DATE_FORMAT) + ";" +
-						acao.getValorUnitario();
+				String linha = STR."\{acao.getIdentificador()};\{acao.getNome()};\{acao.getDataDeValidade().format(DATE_FORMAT)};\{acao.getValorUnitario()}";
 				writer.write(linha);
 				writer.newLine();
 			}

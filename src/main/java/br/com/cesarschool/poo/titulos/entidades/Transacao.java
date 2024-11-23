@@ -1,26 +1,13 @@
-/*
- * Esta classe deve ter os seguintes atributos:
- * entidadeCredito, do tipo EntidadeOperadora      OK
- * entidadeDebito, do tipo EntidadeOperadora       OK
- * acao, do tipo Acao                              OK
- * tituloDivida, do tipo TituloDivida              OK
- * valorOperacao, do tipo double                   OK
- * dataHoraOperacao, do tipo LocalDateTime         OK
- *  
- * Deve ter um construtor p�blico que inicializa os atributos.       OK
- * Deve ter m�todos get/set p�blicos para todos os atributos, que    OK
- * s�o read-only fora da classe.                                     OK
- * 
- *  
- */
-
 package br.com.cesarschool.poo.titulos.entidades;
 
+import br.gov.cesarschool.poo.daogenerico.Entidade;
+import br.com.cesarschool.poo.titulos.utils.Comparavel;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Transacao {
-
-    // ATRIBUTOS
+public class Transacao extends Entidade implements Serializable, Comparavel {
+    private static final long serialVersionUID = 1L;
 
     private final EntidadeOperadora entidadeCredito;
     private final EntidadeOperadora entidadeDebito;
@@ -28,7 +15,6 @@ public class Transacao {
     private final TituloDivida tituloDivida;
     private final double valorOperacao;
     private final LocalDateTime dataHoraOperacao;
-
 
     public Transacao(EntidadeOperadora entidadeCredito, EntidadeOperadora entidadeDebito, Acao acao,
                      TituloDivida tituloDivida, double valorOperacao, LocalDateTime dataHoraOperacao) {
@@ -40,8 +26,22 @@ public class Transacao {
         this.dataHoraOperacao = dataHoraOperacao;
     }
 
-    // MÉTODOS
+    @Override
+    public int comparar(Comparavel outra) {
+        Transacao outraTransacao = (Transacao) outra;
+        return this.dataHoraOperacao.compareTo(outraTransacao.dataHoraOperacao);
+    }
 
+    @Override
+    public String getIdUnico() {
+        return String.format("%s_%s_%s_%s",
+                entidadeCredito.getIdUnico(),
+                entidadeDebito.getIdUnico(),
+                (acao != null ? acao.getIdUnico() : tituloDivida.getIdUnico()),
+                dataHoraOperacao.format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
+    }
+
+    // Getters para os atributos
     public EntidadeOperadora getEntidadeCredito() {
         return entidadeCredito;
     }
@@ -65,5 +65,4 @@ public class Transacao {
     public LocalDateTime getDataHoraOperacao() {
         return dataHoraOperacao;
     }
-
 }

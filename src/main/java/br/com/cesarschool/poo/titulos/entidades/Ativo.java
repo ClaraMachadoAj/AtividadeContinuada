@@ -1,7 +1,3 @@
-package br.com.cesarschool.poo.titulos.entidades;
-
-import java.time.LocalDate;
-
 /*
  * Esta classe deve ter os seguintes atributos:
  * identificador, do tipo int
@@ -12,25 +8,34 @@ import java.time.LocalDate;
  * e métodos set/get públicos para os atributos. O atributo identificador
  * é read-only fora da classe.
  */
+package br.com.cesarschool.poo.titulos.entidades;
 
-public class Ativo {
+import br.gov.cesarschool.poo.daogenerico.Entidade;
+import java.time.LocalDate;
+
+public class Ativo extends Entidade {
+    private static final long serialVersionUID = 1L;
+
     private int identificador;
     private String nome;
     private LocalDate dataDeValidade;
 
-    // Construtor público que inicializa os atributos
     public Ativo(int identificador, String nome, LocalDate dataDeValidade) {
         this.identificador = identificador;
         this.nome = nome;
         this.dataDeValidade = dataDeValidade;
     }
 
-    // Metodo get para o identificador (read-only)
+    @Override
+    public String getIdUnico() {
+        return String.valueOf(identificador);
+    }
+
+    // Métodos get/set
     public int getIdentificador() {
         return identificador;
     }
 
-    // Métodos set e get para nome
     public String getNome() {
         return nome;
     }
@@ -39,7 +44,6 @@ public class Ativo {
         this.nome = nome;
     }
 
-    // Métodos set e get para dataDeValidade
     public LocalDate getDataDeValidade() {
         return dataDeValidade;
     }
