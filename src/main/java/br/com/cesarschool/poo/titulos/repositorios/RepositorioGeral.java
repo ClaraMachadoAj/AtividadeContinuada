@@ -1,5 +1,6 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
+import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 import br.gov.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 import br.gov.cesarschool.poo.daogenerico.Entidade;
 
@@ -11,7 +12,12 @@ public abstract class RepositorioGeral<T extends Entidade> {
         this.dao = new DAOSerializadorObjetos(getClasseEntidade());
     }
 
-    protected abstract Class<T> getClasseEntidade();
+    // Método abstrato que deve ser implementado pelas subclasses
+    public abstract Class<T> getClasseEntidade();
+
+    public DAOSerializadorObjetos getDao() {
+        return dao;
+    }
 
     public boolean incluir(T entidade) {
         return dao.incluir(entidade);
@@ -32,4 +38,7 @@ public abstract class RepositorioGeral<T extends Entidade> {
     public T[] buscarTodos() {
         return (T[]) dao.buscarTodos();
     }
+
+    // Sobrecarga para buscar por identificador inteiro
+    public abstract TituloDivida buscar(int idUnico);
 }

@@ -1,22 +1,3 @@
-
-/*
- * Deve gravar em e ler de um arquivo texto chamado Transacao.txt os dados dos objetos do tipo
- * Transacao. Seguem abaixo exemplos de linhas 
- * De entidadeCredito: identificador, nome, autorizadoAcao, saldoAcao, saldoTituloDivida.
- * De entidadeDebito: identificador, nome, autorizadoAcao, saldoAcao, saldoTituloDivida.
- * De acao: identificador, nome, dataValidade, valorUnitario OU null
- * De tituloDivida: identificador, nome, dataValidade, taxaJuros OU null. 
- * valorOperacao, dataHoraOperacao
- * 
- *   002192;BCB;true;0.00;1890220034.0;001112;BOFA;true;12900000210.00;3564234127.0;1;PETROBRAS;2024-12-12;30.33;null;100000.0;2024-01-01 12:22:21 
- *   002192;BCB;false;0.00;1890220034.0;001112;BOFA;true;12900000210.00;3564234127.0;null;3;FRANCA;2027-11-11;2.5;100000.0;2024-01-01 12:22:21
- *
- * A inclusão deve adicionar uma nova linha ao arquivo. 
- * 
- * A busca deve retornar um array de transações cuja entidadeCredito tenha identificador igual ao
- * recebido como parâmetro.  
- */
-
 package br.com.cesarschool.poo.titulos.repositorios;
 
 import br.com.cesarschool.poo.titulos.entidades.Transacao;
@@ -31,35 +12,35 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepositorioTransacao {
+public class RepositorioTransacao extends RepositorioGeral<Transacao> {
+
 	private static final String FILE_NAME = "Transacao.txt";
 	private static final DateTimeFormatter DATE_TIME_FORMATTER =
 			DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	private static final DateTimeFormatter DATE_FORMATTER =
 			DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-	// Metodo para incluir uma nova transação no arquivo
-	public void incluir(Transacao transacao) {
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
-			String linha = formatarTransacao(transacao);
-			writer.write(linha);
-			writer.newLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	@Override
+	public Class<Transacao> getClasseEntidade() {
+		return Transacao.class;
 	}
 
-	// Metodo para buscar transações pelo identificador da entidade credora
+	@Override
+	public TituloDivida buscar(int idUnico) {
+		return null;
+	}
+
+	// Método para buscar transações pelo identificador da entidade credora
 	public Transacao[] buscarPorEntidadeCredora(long identificadorEntidadeCredito) {
 		return buscarTransacoes(identificadorEntidadeCredito, true);
 	}
 
-	// Metodo para buscar transações pelo identificador da entidade devedora
+	// Método para buscar transações pelo identificador da entidade devedora
 	public Transacao[] buscarPorEntidadeDevedora(long identificadorEntidadeDebito) {
 		return buscarTransacoes(identificadorEntidadeDebito, false);
 	}
 
-	// Metodo auxiliar para buscar transações de acordo com o tipo de entidade
+	// Método auxiliar para buscar transações de acordo com o tipo de entidade
 	private Transacao[] buscarTransacoes(long identificador, boolean isCredito) {
 		List<Transacao> transacoes = new ArrayList<>();
 
@@ -84,31 +65,7 @@ public class RepositorioTransacao {
 		return transacoes.toArray(new Transacao[0]);
 	}
 
-	// Metodo auxiliar para formatar uma transação em uma linha de texto
-	private String formatarTransacao(Transacao transacao) {
-		String acaoFormatada = transacao.getAcao() != null ? formatarAcao(transacao.getAcao()) : "null";
-		String tituloDividaFormatado = transacao.getTituloDivida() != null ? formatarTituloDivida(transacao.getTituloDivida()) : "null";
-
-		return String.format("%d;%s;%.2f;%.2f;%.2f;%d;%s;%.2f;%.2f;%.2f;%s;%s;%.2f;%s",
-				transacao.getEntidadeCredito().getIdentificador(),
-				transacao.getEntidadeCredito().getNome(),
-				transacao.getEntidadeCredito().getAutorizadoAcao(),
-				transacao.getEntidadeCredito().getSaldoAcao(),
-				transacao.getEntidadeCredito().getSaldoTituloDivida(),
-
-				transacao.getEntidadeDebito().getIdentificador(),
-				transacao.getEntidadeDebito().getNome(),
-				transacao.getEntidadeDebito().getAutorizadoAcao(),
-				transacao.getEntidadeDebito().getSaldoAcao(),
-				transacao.getEntidadeDebito().getSaldoTituloDivida(),
-
-				acaoFormatada,
-				tituloDividaFormatado,
-				transacao.getValorOperacao(),
-				transacao.getDataHoraOperacao().format(DATE_TIME_FORMATTER));
-	}
-
-	// Metodo auxiliar para converter uma linha de texto em uma transação
+	// Método auxiliar para converter uma linha de texto em uma transação
 	private Transacao parseLinhaParaTransacao(String linha) {
 		try {
 			String[] campos = linha.split(";");
@@ -145,23 +102,5 @@ public class RepositorioTransacao {
 			e.printStackTrace();
 			return null;
 		}
-	}
-
-	// Metodo para formatar uma ação em uma string
-	private String formatarAcao(Acao acao) {
-		return String.format("%d;%s;%s;%.2f",
-				acao.getIdentificador(),
-				acao.getNome(),
-				acao.getDataDeValidade().format(DATE_FORMATTER),
-				acao.getValorUnitario());
-	}
-
-	// Metodo para formatar um título de dívida em uma string
-	private String formatarTituloDivida(TituloDivida tituloDivida) {
-		return String.format("%d;%s;%s;%.2f",
-				tituloDivida.getIdentificador(),
-				tituloDivida.getNome(),
-				tituloDivida.getDataDeValidade().format(DATE_FORMATTER),
-				tituloDivida.getTaxaJuros());
 	}
 }

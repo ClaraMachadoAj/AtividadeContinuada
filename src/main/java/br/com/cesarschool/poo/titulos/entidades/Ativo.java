@@ -32,7 +32,7 @@ public class Ativo extends Entidade {
     }
 
     // Métodos get/set
-    public int getIdentificador() {
+    public String getIdentificador() {
         return identificador;
     }
 
