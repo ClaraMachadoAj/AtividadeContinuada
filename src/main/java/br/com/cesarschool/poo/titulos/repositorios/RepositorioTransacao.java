@@ -26,8 +26,13 @@ public class RepositorioTransacao extends RepositorioGeral<Transacao> {
 	}
 
 	@Override
-	public TituloDivida buscar(int idUnico) {
+	public EntidadeOperadora buscar(int idUnico) {
 		return null;
+	}
+
+	@Override
+	public boolean excluir(int id) {
+		return false;
 	}
 
 	// Método para buscar transações pelo identificador da entidade credora

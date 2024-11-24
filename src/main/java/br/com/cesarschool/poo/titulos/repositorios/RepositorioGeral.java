@@ -1,6 +1,6 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
-import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 import br.gov.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 import br.gov.cesarschool.poo.daogenerico.Entidade;
 
@@ -40,5 +40,7 @@ public abstract class RepositorioGeral<T extends Entidade> {
     }
 
     // Sobrecarga para buscar por identificador inteiro
-    public abstract TituloDivida buscar(int idUnico);
+    public abstract EntidadeOperadora buscar(int idUnico);
+
+    public abstract boolean excluir(int id);
 }

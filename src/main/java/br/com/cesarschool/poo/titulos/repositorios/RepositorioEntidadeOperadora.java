@@ -7,23 +7,27 @@ public class RepositorioEntidadeOperadora extends RepositorioGeral<EntidadeOpera
     private static final String FILE_NAME = "EntidadeOperadora.txt";
 
     @Override
-    protected Class<EntidadeOperadora> getClasseEntidade() {
+    public Class<EntidadeOperadora> getClasseEntidade() {
         return EntidadeOperadora.class;
     }
 
-    @Override
+    // Sobrecarga de método para buscar por identificador int
     public EntidadeOperadora buscar(int idUnico) {
-        return buscar((long) idUnico); // Converte int para long
+        return super.buscar(String.valueOf(idUnico)); // Converte int para String
     }
 
-    public boolean excluir(long identificador) {
-        return super.excluir(Integer.parseInt(String.valueOf(identificador))); // Reutiliza o método de RepositorioGeral
+    // Sobrecarga de método para buscar por identificador long
+    public EntidadeOperadora buscar(long idUnico) {
+        return super.buscar(String.valueOf(idUnico)); // Converte long para String
     }
 
-    public EntidadeOperadora buscar(long identificador) {
-        return super.buscar(String.valueOf(identificador)); // Reutiliza o método de RepositorioGeral
+    // Sobrecarga de método para excluir por identificador int
+    public boolean excluir(int idUnico) {
+        return super.excluir(String.valueOf(idUnico)); // Converte int para String
     }
 
-    // Métodos adicionais para manipular arquivos (opcional, caso necessário)
-    // Já implementados em RepositorioGeral
+    // Sobrecarga de método para excluir por identificador long
+    public boolean excluir(long idUnico) {
+        return super.excluir(String.valueOf(idUnico)); // Converte long para String
+    }
 }
