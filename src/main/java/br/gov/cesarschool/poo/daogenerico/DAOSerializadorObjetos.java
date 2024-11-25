@@ -9,7 +9,7 @@ public class DAOSerializadorObjetos {
 	private final String nomeDiretorio;
 
 	public DAOSerializadorObjetos(Class<?> tipoEntidade) {
-		this.nomeDiretorio = "./" + tipoEntidade.getSimpleName(); // Ajuste no formato do caminho
+		this.nomeDiretorio = "./" + tipoEntidade.getSimpleName(); // Define o diretório
 		File diretorio = new File(nomeDiretorio);
 		if (!diretorio.exists()) {
 			diretorio.mkdirs(); // Cria o diretório caso não exista
@@ -17,9 +17,8 @@ public class DAOSerializadorObjetos {
 	}
 
 	public boolean incluir(Entidade entidade) {
-		File arquivo = new File(nomeDiretorio, entidade.getIdUnico() + ".ser");
+		File arquivo = new File(nomeDiretorio, entidade.getIdUnico());
 		System.out.println("Tentando incluir arquivo no método incluir: " + arquivo.getAbsolutePath());
-		System.out.println("Diretório configurado no DAO: " + nomeDiretorio);
 
 		if (arquivo.exists()) {
 			System.out.println("Arquivo já existe: " + arquivo.getName());
@@ -37,13 +36,15 @@ public class DAOSerializadorObjetos {
 	}
 
 	public boolean alterar(Entidade entidade) {
-		File arquivo = new File(nomeDiretorio, entidade.getIdUnico() + ".ser");
+		File arquivo = new File(nomeDiretorio, entidade.getIdUnico());
 		if (!arquivo.exists()) {
-			return false; // Não existe uma entidade com este identificador
+			System.out.println("Arquivo não encontrado para alterar: " + arquivo.getAbsolutePath());
+			return false;
 		}
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(arquivo))) {
 			entidade.setDataHoraUltimaAlteracao(java.time.LocalDateTime.now());
 			oos.writeObject(entidade);
+			System.out.println("Arquivo alterado com sucesso: " + arquivo.getAbsolutePath());
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -52,10 +53,8 @@ public class DAOSerializadorObjetos {
 	}
 
 	public boolean excluir(String idUnico) {
-		// Cria o caminho do arquivo com a extensão .ser
-		File arquivo = new File(nomeDiretorio, idUnico + ".ser");
+		File arquivo = new File(nomeDiretorio, idUnico);
 
-		// Verifica se existe e tenta excluir
 		if (arquivo.exists() && arquivo.delete()) {
 			System.out.println("Arquivo excluído com sucesso: " + arquivo.getAbsolutePath());
 			return true;
@@ -65,13 +64,12 @@ public class DAOSerializadorObjetos {
 		}
 	}
 
-
 	public Entidade buscar(String idUnico) {
-		File arquivo = new File(nomeDiretorio, idUnico + ".ser");
+		File arquivo = new File(nomeDiretorio, idUnico);
 		System.out.println("Tentando buscar arquivo: " + arquivo.getAbsolutePath());
 
 		if (!arquivo.exists()) {
-			System.out.println("Arquivo não encontrado: " + arquivo.getName());
+			System.out.println("Arquivo não encontrado: " + arquivo.getAbsolutePath());
 			return null;
 		}
 
@@ -86,22 +84,23 @@ public class DAOSerializadorObjetos {
 		}
 	}
 
-
-
-
 	public Entidade[] buscarTodos() {
 		List<Entidade> entidades = new ArrayList<>();
 		File diretorio = new File(nomeDiretorio);
-		File[] arquivos = diretorio.listFiles((dir, name) -> name.endsWith(".ser")); // Filtra arquivos .ser
+
+		// Filtrar todos os arquivos no diretório
+		File[] arquivos = diretorio.listFiles();
 		if (arquivos != null) {
 			for (File arquivo : arquivos) {
 				try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
 					entidades.add((Entidade) ois.readObject());
 				} catch (IOException | ClassNotFoundException e) {
+					System.err.println("Erro ao deserializar arquivo: " + arquivo.getAbsolutePath());
 					e.printStackTrace();
 				}
 			}
 		}
+		System.out.println("Total de entidades carregadas: " + entidades.size());
 		return entidades.toArray(new Entidade[0]);
 	}
 }
