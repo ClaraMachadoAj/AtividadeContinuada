@@ -25,11 +25,18 @@ public class RepositorioTransacao extends RepositorioGeral<Transacao> {
 	}
 
 	public Transacao[] buscarPorEntidadeCredora(long identificadorEntidadeCredito) {
-		// Busca transações filtrando pela entidade credora
-		return Arrays.stream(buscarTodos())
-				.filter(transacao -> transacao.getEntidadeCredito().getIdentificador() == identificadorEntidadeCredito)
+		Transacao[] todasTransacoes = buscarTodos();
+		System.out.println("Total de transações carregadas: " + todasTransacoes.length);
+		Transacao[] filtradas = Arrays.stream(todasTransacoes)
+				.filter(transacao -> {
+					System.out.println("Verificando transação: " + transacao.getIdUnico());
+					return transacao.getEntidadeCredito().getIdentificador() == identificadorEntidadeCredito;
+				})
 				.toArray(Transacao[]::new);
+		System.out.println("Total de transações filtradas: " + filtradas.length);
+		return filtradas;
 	}
+
 
 	public Transacao[] buscarPorEntidadeDevedora(long identificadorEntidadeDebito) {
 		// Busca transações filtrando pela entidade devedora

@@ -36,9 +36,6 @@ public class DAOSerializadorObjetos {
 		}
 	}
 
-
-
-
 	public boolean alterar(Entidade entidade) {
 		File arquivo = new File(nomeDiretorio, entidade.getIdUnico() + ".ser");
 		if (!arquivo.exists()) {

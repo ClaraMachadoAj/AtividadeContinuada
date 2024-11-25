@@ -5,6 +5,7 @@ import br.com.cesarschool.poo.titulos.utils.Comparavel;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Transacao extends Entidade implements Serializable, Comparavel {
     private static final long serialVersionUID = 1L;
@@ -69,4 +70,29 @@ public class Transacao extends Entidade implements Serializable, Comparavel {
     public LocalDateTime getDataHoraOperacao() {
         return dataHoraOperacao;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Transacao transacao = (Transacao) obj;
+
+        boolean resultado = Objects.equals(getEntidadeCredito(), transacao.getEntidadeCredito()) &&
+                Objects.equals(getEntidadeDebito(), transacao.getEntidadeDebito()) &&
+                Objects.equals(getTituloDivida(), transacao.getTituloDivida()) &&
+                Double.compare(getValorOperacao(), transacao.getValorOperacao()) == 0 &&
+                Objects.equals(getDataHoraOperacao(), transacao.getDataHoraOperacao());
+
+        System.out.println("Comparando transações:");
+        System.out.println("this: " + this);
+        System.out.println("other: " + transacao);
+        System.out.println("Resultado: " + resultado);
+
+        return resultado;
+    }
+
+
+
+
 }

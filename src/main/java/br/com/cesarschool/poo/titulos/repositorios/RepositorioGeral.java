@@ -22,8 +22,10 @@ public abstract class RepositorioGeral<T extends Entidade> {
     }
 
     public boolean incluir(T entidade) {
+        System.out.println("Incluindo entidade com ID: " + entidade.getIdUnico());
         return dao.incluir(entidade);
     }
+
 
     public boolean alterar(T entidade) {
         return dao.alterar(entidade);
@@ -40,10 +42,13 @@ public abstract class RepositorioGeral<T extends Entidade> {
     public T[] buscarTodos() {
         Entidade[] entidades = dao.buscarTodos();
         if (entidades == null) {
-            return (T[]) Array.newInstance(getClasseEntidade(), 0); // Retorna um array vazio do tipo T[]
+            System.out.println("Nenhuma entidade encontrada.");
+            return (T[]) Array.newInstance(getClasseEntidade(), 0);
         }
+        System.out.println("Entidades carregadas: " + Arrays.toString(entidades));
         return Arrays.copyOf(entidades, entidades.length, (Class<? extends T[]>) Array.newInstance(getClasseEntidade(), 0).getClass());
     }
+
 
 
     // Sobrecarga para buscar por identificador inteiro
