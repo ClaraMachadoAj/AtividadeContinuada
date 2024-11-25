@@ -1,5 +1,7 @@
 package br.com.cesarschool.poo.titulos.entidades;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 /*
  * Esta classe deve herdar de Ativo.
  * E deve ter os seguintes atributos:
@@ -37,4 +39,22 @@ public class Acao extends Ativo {
     public double calcularPrecoTransacao(double montante) {
         return montante * valorUnitario;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Acao acao = (Acao) obj;
+        return Double.compare(acao.valorUnitario, valorUnitario) == 0 &&
+                getIdUnico().equals(acao.getIdUnico()) &&
+                getNome().equals(acao.getNome()) &&
+                getDataDeValidade().equals(acao.getDataDeValidade());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdUnico(), getNome(), getDataDeValidade(), valorUnitario);
+    }
+
 }

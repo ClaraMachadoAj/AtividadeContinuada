@@ -21,6 +21,7 @@ public class Ativo extends Entidade {
     private LocalDate dataDeValidade;
 
     public Ativo(int identificador, String nome, LocalDate dataDeValidade) {
+        super(String.valueOf(identificador));
         this.identificador = identificador;
         this.nome = nome;
         this.dataDeValidade = dataDeValidade;
@@ -28,6 +29,7 @@ public class Ativo extends Entidade {
 
     @Override
     public String getIdUnico() {
+        System.out.println("getIdUnico chamado. Retornando: " + identificador);
         return String.valueOf(identificador);
     }
 

@@ -14,15 +14,15 @@ public class RelatorioTransacaoBroker {
 
     public Transacao[] relatorioTransacaoPorNomeEntidadeCredora() {
         // Busca todas as transações no repositório
-        Transacao[] transacoes = repositorioTransacao.buscarPorEntidadeCredora(0); // Buscar todas as transações
+        Transacao[] transacoes = repositorioTransacao.buscarTodos(); // Buscar todas as transações
         Ordenador.ordenar(transacoes, new ComparadorTransacaoPorNomeCredora());
         return transacoes;
     }
 
     public Transacao[] relatorioTransacaoPorDataHora() {
         // Busca todas as transações no repositório
-        Transacao[] transacoes = repositorioTransacao.buscarPorEntidadeCredora(0); // Buscar todas as transações
-        Ordenador.ordenar(transacoes);
+        Transacao[] transacoes = repositorioTransacao.buscarTodos(); // Buscar todas as transações
+        Ordenador.ordenar(transacoes); // Ordena as transações
         return transacoes;
     }
 }

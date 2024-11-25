@@ -34,6 +34,7 @@ public class EntidadeOperadora extends Entidade {
     private double saldoTituloDivida;
 
     public EntidadeOperadora(long identificador, String nome, double autorizadoAcao) {
+        super(String.valueOf(identificador));
         this.identificador = identificador;
         this.nome = nome;
         this.autorizadoAcao = autorizadoAcao;
@@ -94,4 +95,5 @@ public class EntidadeOperadora extends Entidade {
             saldoTituloDivida -= valor;
         }
     }
-}
+
+    }

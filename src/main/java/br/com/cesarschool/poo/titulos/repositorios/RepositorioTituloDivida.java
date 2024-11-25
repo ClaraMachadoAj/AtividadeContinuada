@@ -1,6 +1,5 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
-import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 
 public class RepositorioTituloDivida extends RepositorioGeral<TituloDivida> {
@@ -10,13 +9,13 @@ public class RepositorioTituloDivida extends RepositorioGeral<TituloDivida> {
 		return TituloDivida.class; // Retorna a classe da entidade
 	}
 
-	// Sobrecarga para atender ao teste que exige buscar por int
-	public EntidadeOperadora buscar(int idUnico) {
-		return super.buscar(String.valueOf(idUnico)); // Converte o int para String e utiliza o método genérico
+	@Override
+	public TituloDivida buscar(int idUnico) {
+		return super.buscar(String.valueOf(idUnico)); // Converte int para String e usa a implementação de RepositorioGeral
 	}
 
-	// Sobrecarga para atender ao teste que exige exclusão por int
-	public boolean excluir(int idUnico) {
-		return super.excluir(String.valueOf(idUnico)); // Converte o int para String e utiliza o método genérico
+	@Override
+	public boolean excluir(int id) {
+		return super.excluir(String.valueOf(id)); // Converte int para String e usa a implementação de RepositorioGeral
 	}
 }

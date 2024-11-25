@@ -18,6 +18,7 @@ public class Transacao extends Entidade implements Serializable, Comparavel {
 
     public Transacao(EntidadeOperadora entidadeCredito, EntidadeOperadora entidadeDebito, Acao acao,
                      TituloDivida tituloDivida, double valorOperacao, LocalDateTime dataHoraOperacao) {
+        super("Transacao");
         this.entidadeCredito = entidadeCredito;
         this.entidadeDebito = entidadeDebito;
         this.acao = acao;
@@ -27,17 +28,20 @@ public class Transacao extends Entidade implements Serializable, Comparavel {
     }
 
     @Override
-    public int comparar(Comparavel outra) {
-        Transacao outraTransacao = (Transacao) outra;
-        return this.dataHoraOperacao.compareTo(outraTransacao.dataHoraOperacao);
+    public int comparar(Comparavel c) {
+        if (c instanceof Transacao) {
+            Transacao outra = (Transacao) c;
+            return outra.dataHoraOperacao.compareTo(this.dataHoraOperacao);
+        }
+        throw new IllegalArgumentException("Comparação com tipo incompatível.");
     }
 
     @Override
     public String getIdUnico() {
         return String.format("%s_%s_%s_%s",
-                entidadeCredito.getIdUnico(),
-                entidadeDebito.getIdUnico(),
-                (acao != null ? acao.getIdUnico() : tituloDivida.getIdUnico()),
+                entidadeCredito != null ? entidadeCredito.getIdUnico() : "null",
+                entidadeDebito != null ? entidadeDebito.getIdUnico() : "null",
+                acao != null ? acao.getIdUnico() : tituloDivida.getIdUnico(),
                 dataHoraOperacao.format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
     }
 

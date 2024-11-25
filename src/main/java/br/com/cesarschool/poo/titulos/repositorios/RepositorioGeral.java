@@ -1,8 +1,10 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
-import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 import br.gov.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 import br.gov.cesarschool.poo.daogenerico.Entidade;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public abstract class RepositorioGeral<T extends Entidade> {
 
@@ -36,11 +38,16 @@ public abstract class RepositorioGeral<T extends Entidade> {
     }
 
     public T[] buscarTodos() {
-        return (T[]) dao.buscarTodos();
+        Entidade[] entidades = dao.buscarTodos();
+        if (entidades == null) {
+            return (T[]) Array.newInstance(getClasseEntidade(), 0); // Retorna um array vazio do tipo T[]
+        }
+        return Arrays.copyOf(entidades, entidades.length, (Class<? extends T[]>) Array.newInstance(getClasseEntidade(), 0).getClass());
     }
 
+
     // Sobrecarga para buscar por identificador inteiro
-    public abstract EntidadeOperadora buscar(int idUnico);
+    public abstract T buscar(int idUnico);
 
     public abstract boolean excluir(int id);
 }
