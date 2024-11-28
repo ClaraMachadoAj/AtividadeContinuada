@@ -29,7 +29,10 @@ public abstract class Entidade implements Serializable {
     private String usuarioUltimaAlteracao;
 
     // Construtor sem parâmetros
-    public Entidade(String s) {
+    protected Entidade(String s) {
+    }
+
+    protected Entidade() {
     }
 
     // Getters e Setters

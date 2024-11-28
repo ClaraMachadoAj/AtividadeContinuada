@@ -3,7 +3,6 @@ package br.gov.cesarschool.poo.testes;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import br.com.cesarschool.poo.titulos.entidades.EntidadeModelo;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -25,7 +24,7 @@ public class TesteRelatorios extends TesteGeral {
 	public void t000() {
 		ComparadorTransacaoPorNomeCredora c = new ComparadorTransacaoPorNomeCredora();
 		Assertions.assertTrue(c instanceof Comparador);
-		Assertions.assertTrue(c instanceof ComparadorPadrao); 
+		Assertions.assertTrue(c instanceof ComparadorPadrao);
 	}
 	@Test
 	public void t001() {
@@ -47,43 +46,43 @@ public class TesteRelatorios extends TesteGeral {
 		Assertions.assertTrue(c.comparar(t2, t1) > 0);
 	}
 	@Test
-	public void t003() {		
+	public void t003() {
 		EntidadeModelo[] ents = new EntidadeModelo[3];
-				ents[0] = new EntidadeModelo(1, "ZDE");
-				ents[1] = new EntidadeModelo(2, "ABC");
-				ents[2] = new EntidadeModelo(3, "CDE");
-			Ordenador.ordenar(ents);
-			Assertions.assertEquals(ents[0].getNome(), "ABC");
-			Assertions.assertEquals(ents[1].getNome(), "CDE");
-			Assertions.assertEquals(ents[2].getNome(), "ZDE");
+		ents[0] = new EntidadeModelo(1, "ZDE");
+		ents[1] = new EntidadeModelo(2, "ABC");
+		ents[2] = new EntidadeModelo(3, "CDE");
+		Ordenador.ordenar(ents);
+		Assertions.assertEquals(ents[0].getNome(), "ABC");
+		Assertions.assertEquals(ents[1].getNome(), "CDE");
+		Assertions.assertEquals(ents[2].getNome(), "ZDE");
 	}
 	@Test
-	public void t004() {		
+	public void t004() {
 		EntidadeModelo[] ents = new EntidadeModelo[3];
-				ents[0] = new EntidadeModelo(2, "ZDE");
-				ents[1] = new EntidadeModelo(1, "ABC");
-				ents[2] = new EntidadeModelo(3, "CDE");
-			Ordenador.ordenar(ents, new ComparadorEntidadeModeloIdUnico());
-			Assertions.assertEquals(ents[0].getIdUnico(), "1");
-			Assertions.assertEquals(ents[1].getIdUnico(), "2");
-			Assertions.assertEquals(ents[2].getIdUnico(), "3");
+		ents[0] = new EntidadeModelo(2, "ZDE");
+		ents[1] = new EntidadeModelo(1, "ABC");
+		ents[2] = new EntidadeModelo(3, "CDE");
+		Ordenador.ordenar(ents, new ComparadorEntidadeModeloIdUnico());
+		Assertions.assertEquals(ents[0].getIdUnico(), "1");
+		Assertions.assertEquals(ents[1].getIdUnico(), "2");
+		Assertions.assertEquals(ents[2].getIdUnico(), "3");
 	}
 	@Test
-	public void t005() {		
+	public void t005() {
 		EntidadeModelo[] ents = new EntidadeModelo[3];
-				ents[0] = new EntidadeModelo(2, "ZDE");
-				ents[1] = new EntidadeModelo(1, "ABC");
-				ents[2] = new EntidadeModelo(3, "CDE");
-			Ordenador.ordenar(ents, new ComparadorEntidadeModeloIdUnico());
-			Assertions.assertEquals(ents[0].getIdUnico(), "1");
-			Assertions.assertEquals(ents[1].getIdUnico(), "2");
-			Assertions.assertEquals(ents[2].getIdUnico(), "3");
+		ents[0] = new EntidadeModelo(2, "ZDE");
+		ents[1] = new EntidadeModelo(1, "ABC");
+		ents[2] = new EntidadeModelo(3, "CDE");
+		Ordenador.ordenar(ents, new ComparadorEntidadeModeloIdUnico());
+		Assertions.assertEquals(ents[0].getIdUnico(), "1");
+		Assertions.assertEquals(ents[1].getIdUnico(), "2");
+		Assertions.assertEquals(ents[2].getIdUnico(), "3");
 	}
-	
+
 	@Test
 	public void t006() {
 		excluirArquivosDiretorio(NOME_DIR_TRANSACAO);
-		RepositorioTransacao rep = new RepositorioTransacao();		
+		RepositorioTransacao rep = new RepositorioTransacao();
 		RelatorioTransacaoBroker broker = new RelatorioTransacaoBroker();
 		Acao a = new Acao(1, "PB01", LocalDate.now(), 100);
 		EntidadeOperadora e1 = new EntidadeOperadora(1, "XXX", 100);
@@ -94,16 +93,16 @@ public class TesteRelatorios extends TesteGeral {
 		Transacao t3 = new Transacao(e3, e1, a, null, 0, LocalDateTime.now().plusDays(1));
 		rep.incluir(t1);
 		rep.incluir(t2);
-		rep.incluir(t3);				
+		rep.incluir(t3);
 		Transacao[] trans = broker.relatorioTransacaoPorNomeEntidadeCredora();
 		Assertions.assertEquals(trans[0].getEntidadeCredito().getNome(), "AAA");
 		Assertions.assertEquals(trans[1].getEntidadeCredito().getNome(), "XXX");
-		Assertions.assertEquals(trans[2].getEntidadeCredito().getNome(), "ZZZ");		
+		Assertions.assertEquals(trans[2].getEntidadeCredito().getNome(), "ZZZ");
 	}
 	@Test
 	public void t007() {
 		excluirArquivosDiretorio(NOME_DIR_TRANSACAO);
-		RepositorioTransacao rep = new RepositorioTransacao();		
+		RepositorioTransacao rep = new RepositorioTransacao();
 		RelatorioTransacaoBroker broker = new RelatorioTransacaoBroker();
 		Acao a = new Acao(1, "PB02", LocalDate.now(), 200);
 		EntidadeOperadora e1 = new EntidadeOperadora(1, "AAA", 100);
@@ -117,20 +116,20 @@ public class TesteRelatorios extends TesteGeral {
 		rep.incluir(t1);
 		rep.incluir(t2);
 		rep.incluir(t3);
-		rep.incluir(t4);						
+		rep.incluir(t4);
 		Transacao[] trans = broker.relatorioTransacaoPorDataHora();
 		Assertions.assertEquals(trans[0].getEntidadeCredito().getNome(), "DDD");
 		Assertions.assertEquals(trans[1].getEntidadeCredito().getNome(), "CCC");
-		Assertions.assertEquals(trans[2].getEntidadeCredito().getNome(), "BBB");		
+		Assertions.assertEquals(trans[2].getEntidadeCredito().getNome(), "BBB");
 		Assertions.assertEquals(trans[3].getEntidadeCredito().getNome(), "AAA");
 	}
-	
-	static class ComparadorEntidadeModeloIdUnico implements Comparador {		
+
+	static class ComparadorEntidadeModeloIdUnico implements Comparador {
 		public int comparar(Comparavel c1, Comparavel c2) {
 			Entidade e1 = (Entidade)c1;
 			Entidade e2 = (Entidade)c2;
 			return e1.getIdUnico().compareTo(e2.getIdUnico());
-		}		
+		}
 	}
-	
+
 }
